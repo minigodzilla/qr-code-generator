@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/browser/qrious.min.js"></script>
+
+</head>
+
+<body>
+
+    <div id="qrcode-container"></div>
+
+    <script>
+        function generateQRCode(data, logoPath) {
+            var qr = new QRious({
+                element: document.getElementById('qrcode-container'),
+                value: data,
+                size: 300,
+            });
+
+            if (logoPath) {
+                var img = new Image();
+                img.src = logoPath;
+
+                img.onload = function () {
+                    var ctx = qr._context;
+                    var x = (qr._element.width - img.width) / 2;
+                    var y = (qr._element.height - img.height) / 2;
+
+                    ctx.drawImage(img, x, y, img.width, img.height);
+                };
+            }
+        }
+
+        // Example usage
+        var dataToEncode = 'Your data here';
+        var logoPath = 'logo.png'; // Replace with the path to your logo image
+        generateQRCode(dataToEncode, logoPath);
+    </script>
+</body>
+
+</html>
